@@ -6,12 +6,11 @@ import axios from 'axios';
     https://api.github.com/users/<your name>
 */
 
-
 const cardDiv = document.querySelector('.cards')
 
+const kyleGit = 'https://api.github.com/users/Kylevb405'
 
-
-axios.get('https://api.github.com/users/Kylevb405')
+axios.get(kyleGit)
 .then((res) => {
 
   const userData = res.data
@@ -20,59 +19,56 @@ axios.get('https://api.github.com/users/Kylevb405')
 
   const kyleCard = githubCardComponent(userData)
 
-  // console.log(kyleCard)
-
   cardDiv.appendChild(kyleCard)  
-  
-  axios.get(`${userData.followers_url}`)
-    .then((res) => {
-  
-      const followerObjects = res.data
-  
-      // console.log(followerObjects);
-  
-  
-      followerObjects.forEach(object => {
-        
-        const followerURL = object.url
-        
-              // console.log(object.url)
-        
-              // console.log(object.login)
-  
-        axios.get(`${followerURL}`)
-          .then((res) => {
-  
-            const followerData = res.data
-  
-            const followerCard = githubCardComponent(followerData)
-  
-            cardDiv.appendChild(followerCard)
-  
-          })
-  
-      });
-  
-      // followerData.forEach( () => {
-  
-      //   // console.log(`this is a test ${object}`);
-  
-      //   const followerCard = githubCardComponent(followerData['url'])
-  
-      //   console.log(followerCard);
-  
-      //   cardDiv.appendChild(followerCard)
-  
-      // })
-          
+
+}).catch(err => console.log(err));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+axios.get(`${kyleGit}/followers`)
+  .then((res) => {
+
+    const followerObjects = res.data
+
+    followerObjects.forEach(object => {
+
+      console.log(object);
+
+       const followerCard = object.url
+
+       axios.get(`${followerCard}`)
+
+       .then((res) => {
+         
+         const followerData = res.data
+   
+         console.log(followerData);
+   
+         const followerCard = githubCardComponent(followerData)
+         
+         cardDiv.appendChild(followerCard)
+       })
+       .catch(err => console.log(err));
     })
-})
-
-
-
-
-
-
+  })
+  .catch(err => console.log(err));
+  
 /*
 STEP 2: Inspect and study the data coming back, this is YOUR
 github info! You will need to understand the structure of this
@@ -80,7 +76,6 @@ data in order to use it to build your component function
 
 Skip to STEP 3.
 */
-
 /*
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
@@ -104,9 +99,7 @@ Skip to STEP 3.
       luishrd
       bigknell
   */
-  
-const followersArray = [];
-
+// const followersArray = [];
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -149,7 +142,6 @@ function githubCardComponent(objData) {
     const locationPTag = document.createElement('p')
       locationPTag.textContent = `Location: ${objData.location}`
 
-    
     const profilePtag = document.createElement('p')
       profilePtag.textContent = `Profile: `
     
@@ -179,8 +171,3 @@ function githubCardComponent(objData) {
     
   return gitCard
 }
-
-
-
-
-
