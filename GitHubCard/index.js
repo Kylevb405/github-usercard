@@ -23,24 +23,6 @@ axios.get(kyleGit)
 
 }).catch(err => console.log(err));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 axios.get(`${kyleGit}/followers`)
   .then((res) => {
 
@@ -145,9 +127,9 @@ function githubCardComponent(objData) {
     const profilePtag = document.createElement('p')
       profilePtag.textContent = `Profile: `
     
-    const profileAtag = document.createElement('a')
-      profileAtag.setAttribute('href', objData.html_url)
-      profileAtag.textContent = `${objData.html_url}`
+      const profileAtag = document.createElement('a')
+        profileAtag.setAttribute('href', objData.html_url)
+        profileAtag.textContent = `${objData.html_url}`
     
     const followersPtag = document.createElement('p')
       followersPtag.textContent = `Followers: ${objData.followers}`
